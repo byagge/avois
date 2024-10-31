@@ -1,0 +1,195 @@
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.profile-icon img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 15px);
+    right: -10px;
+    background: #ffffff;
+    min-width: 240px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 8px;
+    z-index: 1000;
+    animation: dropdownFade 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    margin: 2px 0;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    transform: translateX(4px);
+}
+
+.dropdown-menu i {
+    margin-right: 12px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+    margin: 8px 0;
+}
+
+/* Специальные стили для кнопки выхода */
+.logout {
+    color: #e74c3c !important;
+    font-weight: 600 !important;
+}
+
+.logout:hover {
+    background-color: #fff5f5 !important;
+}
+
+.logout i {
+    color: #e74c3c !important;
+}
+
+/* Треугольник сверху дропдауна */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 24px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    transform: rotate(45deg);
+    border-left: 1px solid rgba(0,0,0,0.08);
+    border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Добавим подсветку активного пункта */
+.dropdown-menu a:active {
+    background-color: #e9ecef;
+    transform: scale(0.98);
+}
+
+/* Добавим метку для активного профиля */
+.profile-icon::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: #2ecc71;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-icon {
+    position: fixed;
+    top: 30px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.profile-icon img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.dropdown-menu {
+    display: none;
+    position: fixed;
+    top: 100px; /* Отступ от верха страницы */
+    left: 1270px; /* Отступ справа */
+    background: #ffffff;
+    min-width: 240px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 8px;
+    z-index: 999; /* Чуть меньше, чем у иконки */
+    animation: dropdownFade 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+    width: 20px;
+}
+
+/* Остальные стили остаются без изменений */
+
+/* Удалите или закомментируйте этот блок, так как он больше не нужен */
+/*
+.header {
+    position: relative;
+    padding-right: 70px;
+}
+*/
+
+/* Добавим метку для активного профиля */
+.profile-icon::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: #2ecc71;
+    border-radius: 50%;
+    border: 2px solid white;
+}   
+

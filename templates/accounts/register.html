@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="wrapper">
+    <form id="registerForm" action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
+      <h2>Регистрация</h2>
+
+      <div class="input-field {% if form.username.errors %}error{% endif %}">
+        <input type="text" name="username" value="{{ form.username.value|default_if_none:'' }}" required>
+        <label>Придумайте username</label>
+        {% if form.username.errors %}
+          <span class="error-message">{{ form.username.errors.0 }}</span>
+        {% endif %}
+      </div>
+
+      <div class="input-field {% if form.email.errors %}error{% endif %}">
+        <input type="email" name="email" value="{{ form.email.value|default_if_none:'' }}" required>
+        <label>Введите вашу электронную почту</label>
+        {% if form.email.errors %}
+          <span class="error-message">{{ form.email.errors.0 }}</span>
+        {% endif %}
+      </div>
+
+      <div class="input-field {% if form.password.errors %}error{% endif %}">
+        <input type="password" name="password" required>
+        <label>Придумайте сложный пароль</label>
+        {% if form.password.errors %}
+          <span class="error-message">{{ form.password.errors.0 }}</span>
+        {% endif %}
+      </div>
+
+      <div class="input-field {% if form.password_confirm.errors %}error{% endif %}">
+        <input type="password" name="password_confirm" required>
+        <label>Подтвердите пожалуйста ваш пароль</label>
+        {% if form.password_confirm.errors %}
+          <span class="error-message">{{ form.password_confirm.errors.0 }}</span>
+        {% endif %}
+      </div>
+
+      <button type="submit">Зарегестрироваться</button>
+      <div class="register">
+        <p>У вас есть аккаунт? <a href="{% url 'login' %}">Войдите</a></p>               
+      </div>
+    </form>
+  </div>
+</body>
+</html>

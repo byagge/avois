@@ -1,0 +1,77 @@
+{% load static %}
+{% load form_tags %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'styles/settings.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</head>
+<body style="background:url('{% static '/images/contact.jpg' %}');">
+    <div class="wrapper bg-white mt-sm-5">
+        <h4 class="pb-4 border-bottom">Account Settings</h4>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="d-flex align-items-start py-3 border-bottom">
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" class="img" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'images/profile.jpg'%}" class="img" alt="Default Profile Picture">
+            {% endif %}
+                <div class="pl-sm-4 pl-2" id="img-section">
+                    <b>Profile Photo</b>
+                    <p>Accepted file type: .png, less than 10MB</p>
+                    {{ form.avatar|add_class:"form-control-file" }}
+                </div>
+            </div>
+            <div class="py-2">
+                <div class="row py-2">
+                    <div class="col-md-6">
+                        <label for="username">Username</label>
+                        {{ form.username|add_class:"bg-light form-control" }}
+                    </div>
+                    <div class="col-md-6 pt-md-0 pt-3">
+                        <label for="name">Name</label>
+                        {{ form.name|add_class:"bg-light form-control" }}
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-12">
+                        <label for="email">Email Address</label>
+                        {{ form.email|add_class:"bg-light form-control" }}
+                    </div>
+                    <!-- <div class="col-md-6 pt-md-0 pt-3">
+                        <label for="title">Any quotes?</label>
+                        {{ form.title|add_class:"bg-light form-control" }} 
+                    </div> -->
+                </div>
+                <div class="row py-2">
+                    <div class="col-md-12">
+                        <label for="bio">Share something with us</label>
+                        {{ form.bio|add_class:"bg-light form-control" }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="py-3 pb-4 border-bottom">
+                <button type="submit" class="btn btn-primary mr-3">Save Changes</button>
+                <a href="{% url 'profile' user.username %}" class="btn border button">Cancel</a>
+            </div>
+            
+            <div class="d-sm-flex align-items-center pt-3" id="deactivate">
+                <div>
+                    <b>Logout your account</b>
+                    <p>Logout from your account</p>
+                </div>
+                <div class="ml-auto">
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                </div>             
+            </div>
+        </form>
+    </div>
+</body>
+</html>

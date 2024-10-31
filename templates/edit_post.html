@@ -1,0 +1,41 @@
+<!-- templates/edit_post.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Редактирование поста</title>
+  <link rel="stylesheet" href="{% static 'styles/create.css' %}">
+</head>
+<body>
+  <div class="wrapper">
+    <form action="{% url 'edit_post' post.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-field">
+          <div class="dropdown-container">
+            <!-- <label for="tags" style="color: #fff;">Выберите теги</label> -->
+            <select name="tags" id="tags" multiple required>
+              {% for tag in tags %}
+                <option value="{{ tag.id }}" {% if tag in post.tags.all %}selected{% endif %}>{{ tag.name }}</option>
+              {% endfor %}
+            </select>
+          </div>          
+        </div>
+        <div class="input-field">
+            <input type="text" name="title" value="{{ post.title }}" required>
+            <label>Введите заголовок</label>
+        </div>
+        <div class="input-field">
+            <textarea name="content" rows="5" required>{{ post.content }}</textarea>
+            <label>Введите контент</label>
+        </div>
+        <div class="input-field">
+            <input type="file" class="upload-container" id="fileInput" name="cover_image">
+            <small>Текущая обложка: {% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" style="max-width: 200px;">{% else %}Нет{% endif %}</small>
+        </div>
+        <button type="submit">Сохранить изменения</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Avision</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Demo project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header" style="background: rgba(0,0,0,0.90); height: 80px; padding-bottom: 95px;">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="logo"><a href="#">avois</a></div>
+						<nav class="main_nav">
+						
+							<div class="weather">
+								{% if temperature %}
+								<div class="temperature">{{ temperature }}</div>
+								{% else %}
+									Данные недоступны
+        						{% endif %}
+								<img class="weather_icon" src="{% static 'images/cloud.png' %}" alt="">
+							</div>
+							
+						</nav>
+						<div class="search_container ml-auto">	
+							<form action="#">
+								<input type="search" class="header_search_input" style="width: 700px" required="required" placeholder="Type to Search..." >
+								<img class="header_search_icon" src="{% static 'images/search.png' %}" alt="">
+							</form>
+							<button class="btn btn-light rounded-pill px-3" type="button">Войти</button>
+							
+						</div>
+						<div class="hamburger ml-auto menu_mm">
+							<i class="fa fa-bars trans_200 menu_mm" aria-hidden="true"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Menu -->
+
+	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+		<div class="logo menu_mm"><a href="#">avois</a></div>
+		<div class="search">
+			<form action="#">
+				<input type="search" class="header_search_input menu_mm" required="required" placeholder="Type to Search...">
+				<img class="header_search_icon menu_mm" src="{% static 'images/search_2.png' %}" alt="">
+			</form>
+		</div>
+		<nav class="menu_nav">
+			<!-- <ul class="menu_mm">
+				<li class="menu_mm"><a href="index.html">home</a></li>
+				<li class="menu_mm"><a href="#">Fashion</a></li>
+				<li class="menu_mm"><a href="#">Gadgets</a></li>
+				<li class="menu_mm"><a href="#">Lifestyle</a></li>
+				<li class="menu_mm"><a href="#">Video</a></li>
+				<li class="menu_mm"><a href="contact.html">Contact</a></li>
+			</ul>0 -->
+			<div class="weather">
+				<div class="temperature" style="color:black">+10°</div>
+				<img class="weather_icon" style='color:black' src="{% static 'images/cloud.png' %}" alt="">
+			</div>
+			<button class="btn btn-secondary rounded-pill px-3" type="button">Войти</button>
+		</nav>
+	</div>
+	
+
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/masonry/masonry.js' %}"></script>
+<script src="{% static 'plugins/masonry/images_loaded.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

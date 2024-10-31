@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassmorphism Login Form | CodingNepal</title>
+  <link rel="stylesheet" href="{% static 'css/styles-reg.css' %}">
+</head>
+<body>
+  <div class="wrapper">
+    <form action="{% url 'verify_email' %}" method="POST">
+      {% csrf_token %}
+      <h2>Register</h2>
+      <p style="color: white; font-size: 12px;">We have sent a verification code to your email. If you got it, enter below:</p>
+      
+      <div class="input-field">
+        <input type="text" name="code" required maxlength="5" placeholder="Enter verification code" />
+      </div>
+
+      <div class="forget">
+        <a href="{% url 'resend_verification_code' %}">Didn't get it?</a>
+      </div>
+      
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+  </div>
+</body>
+</html>

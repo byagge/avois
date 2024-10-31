@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Post</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Demo project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/post_responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/header.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header" style="background: rgba(0,0,0,0.90); height: 80px; padding-bottom: 95px;">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="logo"><a href="{% url 'homepage' %}">avois</a></div>
+						<nav class="main_nav">
+						
+							<div class="weather">
+								{% if temperature %}
+								<div class="temperature">{{ temperature }}°C</div>
+								{% else %}
+									Данные недоступны
+        						{% endif %}
+								<img class="weather_icon" src="{% static 'images/cloud.png' %}" alt="">
+							</div>
+
+							
+							
+						</nav>
+						<div class="search_container ml-auto">
+							<form method="get" action="{% url 'homepage' %}">
+								<input type="search" name="query" class="header_search_input" style="width: 700px" required="required" 
+									   placeholder="Введите для поиска..." value="{{ search_query }}">
+								<button type="submit" class="header_search_button">
+									<img class="header_search_icon" src="{% static 'images/search.png' %}" alt="Поиск">
+								</button>
+							</form>
+							
+							
+				
+
+							{% if user.is_authenticated %}
+								<!-- Если пользователь авторизован, показываем иконку профиля -->
+								<div class="profile-dropdown">
+									<a href="#" class="profile-icon" id="profileDropdownToggle">
+										<img src="{% static 'images/profile.jpg' %}" alt="Profile Icon">
+									</a>
+									<div class="dropdown-menu" id="profileDropdownMenu">
+										<a href="{% url 'profile' user.username %}">
+											<i class="fas fa-user"></i> Профиль
+										</a>
+										<a href="{% url 'settings' %}">
+											<i class="fas fa-cog"></i> Настройки
+										</a>
+										<a href="{% url 'myposts' %}">
+											<i class="fas fa-bookmark"></i> Мои посты
+										</a>
+										<a href="{% url 'homepage' %}">
+											<i class="fas fa-plus"></i> Создать пост
+										</a>
+										<div class="dropdown-divider"></div>
+										<a href="{% url 'logout' %}" class="logout">
+											<i class="fas fa-sign-out-alt"></i> Logout
+										</a>
+									</div>
+								</div>
+							{% else %}
+								<!-- Если пользователь не авторизован, показываем кнопку Войти -->
+
+									<a href="{% url 'login' %}" class="auth-button profile-icon">
+										<img src="{% static 'images/profile.jpg' %}" alt="Profile Icon">
+									</a>
+							{% endif %}
+						</div>
+						
+						<div class="hamburger ml-auto menu_mm">
+							<i class="fa fa-bars trans_200 menu_mm" aria-hidden="true"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Menu -->
+
+	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+		<div class="logo menu_mm"><a href="#">avois</a></div>
+		<div class="search">
+			<form action="#">
+				<input type="search" class="header_search_input menu_mm" required="required" placeholder="Введите для поиска..">
+				<img class="header_search_icon menu_mm" src="images/search_2.png" alt="">
+			</form>
+		</div>
+		<nav class="menu_nav">
+		</nav>
+	</div>
+	
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/post.jpg' %}" data-speed="0.8"></div>
+		<div class="home_content">
+			{% for tag in post.tags.all %}
+			<div class="post_category trans_200"><a href="{% url 'homepage' %}?tag={{ tag.name }}" class="trans_200" style="font-size: 73%;">{{ tag.name }}</a></div>
+			{% endfor %}
+			<div class="post_title">{{ post.title }}</div>
+		</div>
+	</div>
+	
+	<!-- Page Content -->
+
+	<div class="page_content">
+		<div class="container">
+			<div class="row row-lg-eq-height">
+
+				<!-- Post Content -->
+
+				<div class="col-lg-9">
+					<div class="post_content">
+
+						<!-- Top Panel -->
+						<div class="post_panel post_panel_top d-flex flex-row align-items-center justify-content-start">
+							<div class="author_image"><div><img src="{{ author.avatar.url|default:'https://a4-images.myspacecdn.com/images03/2/85a286a4bbe84b56a6d57b1e5bd03ef4/300x300.jpg' }}" alt=""></div></div>
+
+							<div class="post_meta"><a href="#">{{ post.author }}</a><span>{{ post.created_at }}</span></div>
+						</div>
+
+						<!-- Post Body -->
+
+						<div class="post_body">
+							<p class="post_p">{{ content_with_images|safe }}</p>
+							<figure>
+	
+							<!-- Post Tags -->
+							<div class="post_tags">
+								<ul>
+									<li class="post_tag"><a href="#">{{post.tag}}</a></li>
+				
+								</ul>
+							</div>
+						</div>
+						
+						<!-- Bottom Panel -->
+						<div class="post_panel bottom_panel d-flex flex-row align-items-center justify-content-start">
+							<div class="author_image"><div><img src="{{ author.avatar.url|default:'https://a4-images.myspacecdn.com/images03/2/85a286a4bbe84b56a6d57b1e5bd03ef4/300x300.jpg' }}" alt=""></div></div>
+							<div class="post_meta"><a href="#">{{ poast.author }}</a><span>{{ post.created_at}}</span></div>
+						</div>
+
+						<!-- Similar Posts -->
+						<div class="similar_posts">
+							<div class="grid clearfix">
+								{% for post in recommended_posts|slice:":3" %}
+								<!-- Small Card With Image -->
+								<div class="card card_small_with_image grid-item">
+									<img class="card-img-top" src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+									<div class="card-body">
+										<div class="card-title card-title-small"><a href="post.html">{{ post.title }}</a></div>
+										<small class="post_meta"><a href="#">{{ post.author }}</a><span>{{ post.created_at }}</span></small>
+									</div>
+								</div>
+								{% endfor %}
+
+
+							</div>
+							<!-- Post Comment -->
+							<div class="post_comment">
+								<div class="post_comment_title">Коментировать</div>
+								<div class="row">
+									<div class="col-xl-8">
+										<div class="post_comment_form_container">
+											{% if user.is_authenticated %}
+												<form method="post" action="{% url 'retrieve' post.id %}">
+													{% csrf_token %}
+													<textarea class="comment_text" name="comment_text" placeholder="Введите комментарий..." required="required"></textarea>
+													<button type="submit" class="comment_button">Опубликовать</button>
+												</form>
+											{% else %}
+												<p>Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>.</p>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Comments -->
+							<div class="comments">
+								<div class="comments_title">Коментарии <span>({{ comments.count }})</span></div>
+								<div class="row">
+									<div class="col-xl-8">
+										<div class="comments_container">
+											{% for comment in comments %}
+												<ul class="comment_list">
+													<li class="comment">
+														<div class="comment_body">
+															<div class="comment_panel d-flex flex-row align-items-center justify-content-start">
+																<div class="comment_author_image">
+																	<div><img src="{{ comments.user.avatar.url|default:'https://a4-images.myspacecdn.com/images03/2/85a286a4bbe84b56a6d57b1e5bd03ef4/300x300.jpg' }}" alt=""></div>
+																</div>
+																<small class="post_meta">
+																	<a href="#">{{ comment.user.username }}:</a>
+																	<span>{{ comment.created_at }}</span>
+																</small>
+																<!-- <button type="button" class="reply_button ml-auto">Reply</button> -->
+															</div>
+															<div class="comment_content">
+																<p>{{ comment.text }}</p>
+															</div>
+														</div>
+													</li>
+												</ul>
+											{% empty %}
+												<div class="comment_content">
+													<p>Комментариев пока нет. Будьте первым!</p>
+												</div>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+													
+
+															<!-- Reply -->
+										<br>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+				
+
+	<!-- Footer -->
+
+	<footer class="footer">
+		<div class="container">
+			<div class="row row-lg-eq-height">
+				<div class="col-lg-9 order-lg-1 order-2">
+					<div class="footer_content">
+						<div class="footer_logo"><a href="#">avois</a></div>
+						<div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This service is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="#" target="_blank">Muhammad Aziz</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/masonry/masonry.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/post.js' %}"></script>
+</body>
+</html> 
